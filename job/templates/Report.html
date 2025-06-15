@@ -1,0 +1,202 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'admin_navigation.html' %}
+
+<style>
+/* Styling for report sections */
+.report-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.report-buttons {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-report {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-report:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+</style>
+
+<div class="container mt-5">
+    <div class="report-container">
+        <h3 class="text-center"><i class="fa fa-file-text"></i> Generate Reports</h3>
+
+        <!-- Report Selection Buttons -->
+        <div class="report-buttons">
+            <button class="btn-report" onclick="showReport('jobReport')">Job Report</button>
+            <button class="btn-report" onclick="showReport('userReport')">User Report</button>
+            <button class="btn-report" onclick="showReport('employeeReport')">Employee Report</button>
+        </div>
+
+        <!-- Job Report -->
+        <div id="jobReport" class="report-section" style="display:none;">
+            <h4 class="text-center">Job Report</h4>
+            <table class="table mt-3" id="jobTable">
+                <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.title }}</td>
+                        <td>{{ job.employee.company }}</td>
+                        <td>{{ job.location }}</td>
+                        <td>{{ job.start_date }}</td>
+                        <td>{{ job.end_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="btn-report" onclick="downloadPDF('jobTable', 'Job_Report')">Download Job Report (PDF)</button>
+            <button class="btn-report" onclick="downloadExcel('jobTable', 'Job_Report')">Download Job Report (Excel)</button>
+        </div>
+
+        <!-- User Report -->
+        <div id="userReport" class="report-section" style="display:none;">
+            <h4 class="text-center">User Report</h4>
+            <table class="table mt-3" id="userTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+               
+                        <th>Active</th>
+                        <th>Last Login</th>
+                        <th>Date Joined</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.username }}</td>
+                        
+                        <td>{% if user.is_active %}Yes{% else %}No{% endif %}</td>
+                        <td>{{ user.last_login }}</td>
+                        <td>{{ user.date_joined }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="btn-report" onclick="downloadPDF('userTable', 'User_Report')">Download User Report (PDF)</button>
+            <button class="btn-report" onclick="downloadExcel('userTable', 'User_Report')">Download User Report (Excel)</button>
+        </div>
+
+        <!-- Employee Report -->
+        <div id="employeeReport" class="report-section" style="display:none;">
+            <h4 class="text-center">Employee Report</h4>
+            <table class="table mt-3" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp.id }}</td>
+                        <td>{{ emp.user.first_name }}</td>
+                        <td>{{ emp.user.username }}</td>
+                        <td>{{ emp.company }}</td>
+                        <td>{{ emp.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="btn-report" onclick="downloadPDF('employeeTable', 'Employee_Report')">Download Employee Report (PDF)</button>
+            <button class="btn-report" onclick="downloadExcel('employeeTable', 'Employee_Report')">Download Employee Report (Excel)</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Report Functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script>
+function showReport(reportId) {
+    document.querySelectorAll('.report-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(reportId).style.display = 'block';
+}
+
+function downloadPDF(tableId, filename) {
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF();
+    doc.text(filename.replace('_', ' '), 80, 10);
+
+    let table = document.getElementById(tableId);
+    let rows = table.getElementsByTagName("tr");
+
+    let yPos = 20;
+    for (let i = 0; i < rows.length; i++) {
+        let cols = rows[i].getElementsByTagName("td");
+        let line = "";
+        for (let j = 0; j < cols.length; j++) {
+            line += cols[j].innerText + " | ";
+        }
+        doc.text(line, 10, yPos);
+        yPos += 10;
+    }
+
+    doc.save(filename + ".pdf");
+}
+
+function downloadExcel(tableId, filename) {
+    var table = document.getElementById(tableId);
+    var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet 1" });
+    XLSX.writeFile(wb, filename + ".xlsx");
+}
+</script>
+
+{% endblock %}

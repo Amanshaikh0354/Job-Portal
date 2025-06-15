@@ -1,0 +1,206 @@
+{% load static %}
+
+{% block body %}
+{% include 'employee_navigation.html' %}
+
+<style>
+    tr { text-align: center; }
+    .button {
+        padding: 5px 15px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .selected-btn {
+        background-color: green;
+        color: white;
+    }
+    .not-selected-btn {
+        background-color: red;
+        color: white;
+    }
+
+    /* Luxurious Alert Box Styling */
+    .luxury-alert {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 2px solid #28a745;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 60%;
+        max-width: 500px;
+        z-index: 1001;
+        text-align: center;
+        font-size: 16px;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .luxury-alert .header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #28a745;
+        text-transform: uppercase;
+    }
+
+    .luxury-alert .content {
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    .luxury-alert .close-btn {
+        padding: 12px 30px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .luxury-alert .close-btn:hover {
+        background-color: #218838;
+    }
+
+    /* Animation for the alert box */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    .luxury-alert.fadeIn {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Styling for messages */
+    .positive-message {
+        color: #28a745;
+        font-weight: bold;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .negative-message {
+        color: #dc3545;
+        font-weight: bold;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .highlight {
+        color: #ff8c00;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .thank-you {
+        color: #007bff;
+        font-size: 22px;
+        font-weight: bold;
+    }
+</style>
+
+<marquee style="font-family: 'monotype corsiva'; font-size: 25px; color: darkcyan; background-color: black; font-weight: bold; margin-top: 0%">
+    Applied Candidate List
+</marquee>
+<hr>
+
+<div class="container">
+    <table class="table table-hover" id="example">
+        <thead>
+            <tr style="background-color:#ABB557">
+                <th>S.No</th>
+                <th>Fullname</th>
+                <th>EmailID</th>
+                <th>Contact No.</th>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Apply Date</th>
+                <th>Resume</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+                <tr style="background-color:#DEB887" id="row-{{ i.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.student.user.first_name }} {{ i.student.user.last_name }}</td>
+                    <td>{{ i.student.user.username }}</td>
+                    <td>{{ i.student.mobile }}</td>
+                    <td>{{ i.job.title }}</td>
+                    <td>{{ i.job.employee.company }}</td>
+                    <td>{{ i.applydate }}</td>
+                    <td><a href="{{ i.resume.url }}">Download Resume</a></td>
+                    <td id="response-{{ i.id }}">
+                        <button class="button selected-btn" onclick="updateResponse('{{ i.id }}', 'Selected', '{{ i.student.user.first_name }}', '{{ i.student.user.last_name }}', '{{ i.student.user.username }}', '{{ i.student.mobile }}', '{{ i.job.title }}')">Selected</button>
+                        <button class="button not-selected-btn" onclick="updateResponse('{{ i.id }}', 'Not Selected', '{{ i.student.user.first_name }}', '{{ i.student.user.last_name }}', '{{ i.student.user.username }}', '{{ i.student.mobile }}', '{{ i.job.title }}')">Not Selected</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Luxurious Alert Box -->
+    <div id="luxury-alert" class="luxury-alert">
+        <div class="header" id="alert-header">Congratulations!</div>
+        <div class="content" id="alert-content"></div>
+        <button class="close-btn" onclick="closeAlert()">Close</button>
+    </div>
+</div>
+
+<script>
+// Function to update the response and show luxurious alert box with user info
+function updateResponse(candidateId, responseStatus, firstName, lastName, email, mobile, jobTitle) {
+    var alertBox = document.getElementById('luxury-alert');
+    var alertHeader = document.getElementById('alert-header');
+    var alertContent = document.getElementById('alert-content');
+    
+    // Set the alert box header based on the status
+    if (responseStatus === 'Selected') {
+        alertHeader.innerText = 'Congratulations, You Are Selected!';
+        alertContent.innerHTML = `
+            <p class="highlight"><strong>Name:</strong> ${firstName} ${lastName}</p>
+            <p class="highlight"><strong>Email:</strong> ${email}</p>
+            <p class="highlight"><strong>Contact:</strong> ${mobile}</p>
+            <p class="highlight"><strong>Job Title:</strong> ${jobTitle}</p>
+            <p class="positive-message">We are thrilled to welcome you to our team!</p>
+            <p class="thank-you">Thank you for your interest. Please check your email for the next steps!</p>
+        `;
+    } else {
+        alertHeader.innerText = 'Sorry, You Are Not Selected!';
+        alertContent.innerHTML = `
+            <p class="highlight"><strong>Name:</strong> ${firstName} ${lastName}</p>
+            <p class="highlight"><strong>Email:</strong> ${email}</p>
+            <p class="highlight"><strong>Contact:</strong> ${mobile}</p>
+            <p class="highlight"><strong>Job Title:</strong> ${jobTitle}</p>
+            <p class="negative-message">Unfortunately, you were not selected this time.</p>
+            <p class="thank-you">Thank you for applying. We appreciate your interest in our company and encourage you to check your email for other opportunities!</p>
+        `;
+    }
+
+    // Show the alert box with animation
+    alertBox.style.display = 'block';
+    alertBox.classList.add('fadeIn');
+}
+
+// Function to close the alert box
+function closeAlert() {
+    var alertBox = document.getElementById('luxury-alert');
+    alertBox.style.display = 'none';
+    alertBox.classList.remove('fadeIn');
+}
+</script>
+
+{% endblock %}

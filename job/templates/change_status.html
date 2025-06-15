@@ -1,0 +1,38 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'admin_navigation.html' %}
+
+<marquee style="font-family : 'monotype corsiva' ; font-size : 25px ; color : darkcyan ; background-color : black ; font-weight : bold ; margin-top:0% ">
+    View Employees -Pending
+</marquee>
+<hr>
+<form class="container mt-5" method="post">
+   {% csrf_token %}
+    <label><b>Employee Name</b>></label>
+    <input type="text" class="form-control" name="uname" value="{{employee.user.first_name}} {{employee.user.last_name}}">
+
+    <label><b>Status</b>></label>
+    <select class="form-control" name="status" >
+        <option value="Accept">Accept</option>
+        <option value="Reject">Reject</option>
+    </select>
+
+    <input type="submit" class="btn btn-primary" style="margin-top: 2% ; color : darkcyan ; background-color : black ; height : 40px ; font-size : 20px">
+</form>
+{% include 'footer.html' %}
+
+{% if error == "no" %}
+<script>
+    alert("Status Changed Successfully,Check Your Email...");
+    window.location = ('{% url 'employee_all' %}')
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Somthing went wrong, Try Again.");
+</script>
+{% endif %}
+{% endblock %}

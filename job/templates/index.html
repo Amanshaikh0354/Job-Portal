@@ -1,0 +1,169 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html' %}
+
+<style>
+    .container{
+    max-width : 90%
+    }
+
+    .content{
+    text-align : center;
+    position:absolute;
+    bottom:0;
+    background:rgba(0,0,0,0.5);
+    color:white;
+    height:30px;
+    width:61%
+    }
+
+    .center{
+	position:absolute;
+	top:60%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	}
+
+    /* Testimonials */
+.testimonial-card {
+    background: var(--dark);
+    border-radius: 200px;
+    padding: 3rem;
+    margin: 1rem 5;
+    color: #5ac1e9;
+}
+
+.testimonial-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+</style>
+<div class="container-fliud" style="margin-top:0%">
+    <img src="{% static 'images/hero_1.jpg' %}"  style="height:550px;width:1520px">
+    <div class="center" ><h1 class="text-black font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
+    <a href="{% url 'user_login' %}" class="btn btn-warning btn-block btn-lg">Sign Up</a>
+	<p class="mb-0 text-black lead">Click to the Sign Up button.</p>
+    </div>
+</div>
+
+<div class="container" style="background-color : black; height:600px ; margin-top:2%">
+<h1 class="text-center text-white">----------| OUR JOB PLACED |----------</h1>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <img src="{% static 'images/job_logo_1.jpg' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Product Designer</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/job_logo_2.jpg' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Digital Market Director</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/job_logo_3.jpg' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Back-end Engineer</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/job_logo_4.jpg' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content" >
+                <p>Senior Art Director</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <img src="{% static 'images/go.png' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Google</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/flp.jpeg' %}" style="width=80%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Flipcart</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/bin.jpeg' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Bing</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <img src="{% static 'images/zo.png' %}" style="width=100%; margin-top:5%; height:200px; border-radius:50%">
+            <div class="content"  >
+                <p>Zoom</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">What Our Client Say</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testimonial-card text-center">
+                            <img src="{% static 'images/person_4.jpg' %}" alt="Guest 1" class="testimonial-img mb-3">
+                            <h5>Saad Shaikh, @Google</h5>
+                            <p class="text-muted">Student</p>
+                            <p>"The experience with this job was seamless and efficient. From the moment I began my search, I was impressed with the user-friendly interface and the ease with which I could navigate through available job listings. The platform offers comprehensive filters that helped me pinpoint the perfect opportunities tailored to my skills and preferences.</p>
+                            <p>"Amazing experience! Clean rooms, friendly staff, and great amenities. Will definitely come back!"</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-card text-center">
+                            <img src="{% static 'images/person_3.jpg' %}" alt="Guest 2" class="testimonial-img mb-3">
+                            <h5>Dan, @Dribbble</h5>
+                            <p class="text-muted">Digital Nomad</p>
+                             <p>My experience with this job has been outstanding from start to finish. The platform is incredibly user-friendly, making it easy for me to navigate through thousands of job listings. I appreciated the clear and intuitive layout, which allowed me to quickly filter positions by location, industry, salary, and experience level. This feature really helped streamline my search and saved me time.</p>
+                            <p>"Perfect for remote work. Fast WiFi and comfortable workspace. Highly recommended!"</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+	// Testimonials Carousel
+document.addEventListener('DOMContentLoaded', function() {
+    var testimonialCarousel = document.querySelector('#testimonialCarousel');
+    if (testimonialCarousel) {
+        new bootstrap.Carousel(testimonialCarousel, {
+            interval: 500
+        });
+    }
+});
+
+
+	</script>
+
+
+{% include 'footer.html' %}
+
+{% endblock %}
