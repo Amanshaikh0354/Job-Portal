@@ -1,122 +1,295 @@
 {% load static %}
-
 {% block body %}
 
 {% include 'navigation.html' %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
 <style>
+.hero-section{
+    position: relative;
+}
+
+.hero-section img{
+    width:100%;
+    height:450px;
+    object-fit:cover;
+    filter:brightness(60%);
+}
+
 .center{
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);
-	}
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+}
 
+.hero-title{
+    font-size:60px;
+    font-weight:bold;
+    text-shadow:3px 3px 15px rgba(0,0,0,0.7);
+}
 
+.section-title{
+    color:#0d6efd;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.img-shadow{
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    transition:0.5s;
+}
+
+.img-shadow:hover{
+    transform:scale(1.05);
+}
+
+.custom-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    transition:.4s;
+}
+
+.custom-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.2);
+}
+
+.stats-section{
+    background:linear-gradient(135deg,#0d6efd,#6610f2);
+    color:white;
+    padding:60px 0;
+}
+
+.stats-box h2{
+    font-size:40px;
+    font-weight:bold;
+}
+
+.stats-box p{
+    font-size:18px;
+}
+
+.logo-box img{
+    transition:.4s;
+}
+
+.logo-box img:hover{
+    transform:scale(1.15);
+}
+
+.testimonial{
+    background:#f8f9fa;
+    padding:80px 0;
+}
+
+.quote-box{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.btn-custom{
+    border-radius:50px;
+    padding:12px 30px;
+    font-weight:600;
+}
 </style>
 
-
-<div class="container-fliud" style="margin-top:0%">
-    <img src="{% static 'images/ab.jpg' %}"  style="height:400px;width:1520px">
-	<div class="center" ><h1 class="text-white font-weight-bold">About Us</h1>
-	</div>
-</div>
-<hr>
-<section class="site-section pb-0">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-              <img src="{% static 'images/one.jpg' %}" alt="Image" class="img-fluid img-shadow">
-          </div>
-          <div class="col-lg-5 ml-auto">
-            <h2 class="section-title mb-3">JobBoard For Freelancers, Web Developers</h2>
-            <p>We are passionate about connecting talented freelancers and web developers with the opportunities that can help them thrive. Whether you're an experienced full-stack developer, a creative front-end designer, or just starting your freelance journey, our platform is designed to make your job search easier, more efficient, and more rewarding.</p>
-            <p>This call-to-action provides clear instructions on what the user needs to do, which is sign up to access the platform's benefits. You can customize the text and button design to make it more eye-catching or suited to your website’s style.</p>
-          <a href="{% url 'latest_jobs' %}" class="btn btn-primary">Post a job</a>
-		  </div>
-        </div>
-      </div>
-    </section>
-
-<div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="right-caption">
-                            <!-- Section Tittle -->
-                            
-                            <div class="support-caption">
-                                <p>As a web designer, finding the right projects and clients can sometimes be overwhelming. That's why I turned to [Your Job Board Name]—a platform specifically designed to connect talented designers like me with high-quality job opportunities that align with my skills and career goals.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                            <img src="{% static 'images/two.jpg' %}" style="width=200%; margin-top:6%; height:500px;" alt=" ">
-                    </div>
-                </div>
-            </div><hr>
-
-                   
-				
-				<section class="site-section py-4">
-      <div class="container">
-
-        <div class="row align-items-center">
-          <div class="col-12 text-center mt-4 mb-5">
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                <h2 class="section-title mb-2">Company We've Helped</h2>
-                <p class="lead">we’ve had the privilege of working with a diverse range of clients across various industries, providing innovative solutions to help them achieve their goals.</p>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_mailchimp.svg' %}" style="width=100%; margin-top:5%; height:100px;" alt="Image" class="img-fluid logo-1">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_paypal.svg' %}" style="width=100%; margin-top:5%; height:100px; border-radius:50%" alt="Image" class="img-fluid logo-2">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_stripe.svg' %}" style="width=100%; margin-top:5%; height:100px;" alt="Image" class="img-fluid logo-3">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_visa.svg' %}" style="width=100%; margin-top:5%; height:100px; border-radius:50%" alt="Image" class="img-fluid logo-4">
-          </div>
-
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_apple.svg' %}" style="width=100%; margin-top:5%; height:100px; border-radius:50%" alt="Image" class="img-fluid logo-5">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_tinder.svg' %}" style="width=100%; margin-top:5%; height:100px;" alt="Image" class="img-fluid logo-6">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_sony.svg' %}" style="width=100%; margin-top:5%; height:190px;" alt="Image" class="img-fluid logo-7">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_airbnb.svg' %}" style="width=100%; margin-top:5%; height:100px;" alt="Image" class="img-fluid logo-8">
-          </div>
-        </div>
-      </div>
-    </section>
-	
-	<div class="bg-light pt-5 testimony-full" style="margin-top:0%">
-        <div class="owl-carousel single-carousel">
-
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 align-self-center text-center text-lg-left">
-                <blockquote>
-                  <p>My experience with Google’s services has been incredibly smooth and efficient. From using Google Search for fast, accurate results to managing my emails with Gmail, I’ve found their tools to be incredibly reliable and user-friendly.</p>
-                  <p><cite> &mdash; Chris Peters, @Google</cite></p>
-                </blockquote>
-              </div>
-              <div class="col-lg-6 align-self-end text-center text-lg-right">
-                <img src="{% static 'images/two.png' %}" alt="Image" class="img-fluid mb-0">
-              </div>
-            </div>
-          </div>
-
-      </div>
+<!-- Hero Section -->
+<div class="hero-section">
+    <img src="{% static 'images/ab.jpg' %}" alt="">
+    <div class="center">
+        <h1 class="text-white hero-title animate__animated animate__fadeInDown">
+            About Us
+        </h1>
+        <p class="text-white lead animate__animated animate__fadeInUp">
+            Connecting Talent with Opportunity
+        </p>
     </div>
+</div>
+
+<!-- About Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                <img src="{% static 'images/one.jpg' %}" class="img-fluid img-shadow">
+            </div>
+
+            <div class="col-lg-6 animate__animated animate__fadeInRight">
+                <h2 class="section-title">
+                    Job Board for Freelancers & Developers
+                </h2>
+
+                <p>
+                    We are passionate about connecting talented freelancers,
+                    designers, and web developers with exciting career opportunities.
+                    Our platform helps professionals discover jobs that match
+                    their skills while enabling companies to find the right talent.
+                </p>
+
+                <p>
+                    Whether you are a beginner or an experienced developer,
+                    our goal is to simplify your job search and support your
+                    professional growth.
+                </p>
+
+                <a href="{% url 'latest_jobs' %}" class="btn btn-primary btn-custom">
+                    Explore Jobs
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+
+            <div class="col-md-3 stats-box">
+                <h2>500+</h2>
+                <p>Jobs Posted</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h2>1000+</h2>
+                <p>Job Seekers</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h2>150+</h2>
+                <p>Companies</p>
+            </div>
+
+            <div class="col-md-3 stats-box">
+                <h2>95%</h2>
+                <p>Success Rate</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-5 bg-light">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="section-title">Why Choose Us?</h2>
+            <p>Helping job seekers and companies achieve success.</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+                <div class="custom-card text-center">
+                    <h4>Verified Jobs</h4>
+                    <p>
+                        Access genuine and verified job opportunities from
+                        trusted employers.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="custom-card text-center">
+                    <h4>Top Companies</h4>
+                    <p>
+                        Connect with startups, agencies, and established
+                        organizations.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="custom-card text-center">
+                    <h4>Career Growth</h4>
+                    <p>
+                        Discover opportunities that help you learn and grow.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Second Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+                <div class="custom-card">
+                    <h3 class="section-title">
+                        Empowering Creative Professionals
+                    </h3>
+
+                    <p>
+                        Our platform is designed to help freelancers,
+                        designers, and developers connect with clients and
+                        companies looking for their expertise.
+                    </p>
+
+                    <p>
+                        We focus on creating opportunities that align with
+                        your skills, goals, and career aspirations.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <img src="{% static 'images/two.jpg' %}"
+                     class="img-fluid img-shadow"
+                     style="height:500px;width:100%;">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Testimonial -->
+<section class="testimonial">
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+                <div class="quote-box">
+                    <h3 class="section-title">
+                        What People Say
+                    </h3>
+
+                    <p>
+                        "This platform helped me find excellent opportunities
+                        and connect with amazing companies. The process was
+                        simple, fast, and professional."
+                    </p>
+
+                    <strong>— Chris Peters</strong>
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/two.png' %}"
+                     class="img-fluid">
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 {% include 'footer.html' %}
 {% endblock %}
