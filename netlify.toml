@@ -1,0 +1,3 @@
+[build] 
+command = "python manage.py distill-local public --force" 
+publish = "public" 
